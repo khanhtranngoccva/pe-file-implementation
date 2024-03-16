@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.11)
 
-set(TARGET_NAME PeFileImplementation)
-
+project (PeFileImplementation)
 file(GLOB SOURCES "src/*.cpp")
-add_executable (PeFileImplementation ${SOURCES})
 
-project (${TARGET_NAME})
-
+set(TARGET_NAME pefile)
+add_executable (${TARGET_NAME} ${SOURCES}
+        include/windows-constants.h)
 target_include_directories(${TARGET_NAME} PRIVATE include)

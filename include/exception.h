@@ -8,7 +8,7 @@ class Exception : public std::exception {
 public:
     explicit Exception(const char *message);
     void destroy() const;
-    [[nodiscard]] const char *what() const noexcept override;
+    const char *what() const noexcept override;
     explicit Exception(const std::string &message);
 };
 

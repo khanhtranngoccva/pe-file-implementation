@@ -1,9 +1,9 @@
 #include <cstdlib>
 #include <exception>
 #include <windows.h>
-#include <ctime>
 #include <iostream>
 #include "helpers.h"
+#include "windows-constants.h"
 #include "exception.h"
 
 #define IMAGE_FORMAT_PE32 32
@@ -455,16 +455,9 @@ public:
     }
 };
 
-
-void cleanup(HANDLE fileHandle, HANDLE fileMapping, LPVOID buffer) {
-    CloseHandle(fileHandle);
-    CloseHandle(fileMapping);
-    UnmapViewOfFile(buffer);
-}
-
 int main(const int argc, const char **argv) {
     if (argc != 2) {
-        std::cerr << "Usage: analysis.exe [path]" << std::endl;
+        std::cerr << "Usage: pefile.exe [path]" << std::endl;
         exit(1);
     }
 
