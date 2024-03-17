@@ -376,7 +376,7 @@ public:
                         break;
                     }
                     if (isOrdinal) {
-                        std::cout << "Ordinal import: Library: " << libraryName << " Ordinal: " << thunkData->u1.Ordinal << std::endl;
+                        std::cout << "Ordinal import: Library: " << libraryName << " Ordinal: " << (thunkData->u1.Ordinal ^ 0xFFFF) << std::endl;
                     } else {
                         auto nameHintPair = static_cast<PIMAGE_IMPORT_BY_NAME>(this->getPointerFromRva(thunkData->u1.AddressOfData));
                         std::cout << "Named import: Library: " << libraryName << " Name: " << nameHintPair->Name << " Hint: " << nameHintPair->Hint << std::endl;
@@ -392,7 +392,7 @@ public:
                         break;
                     }
                     if (isOrdinal) {
-                        std::cout << "Ordinal import: Library: " << libraryName << " Ordinal: " << thunkData->u1.Ordinal << std::endl;
+                        std::cout << "Ordinal import: Library: " << libraryName << " Ordinal: " << (thunkData->u1.Ordinal ^ 0xFFFF) << std::endl;
                     } else {
                         auto nameHintPair = static_cast<PIMAGE_IMPORT_BY_NAME>(this->getPointerFromRva(thunkData->u1.AddressOfData));
                         std::cout << "Named import: Library: " << libraryName << " Name: " << nameHintPair->Name << " Hint: " << nameHintPair->Hint << std::endl;
