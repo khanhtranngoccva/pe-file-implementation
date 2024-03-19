@@ -1,5 +1,4 @@
 #pragma once
-
 #include <ctime>
 
 std::string formatTime(time_t timestamp);
@@ -12,6 +11,4 @@ std::string boolStr(bool input);
 std::string maskMatchStr(unsigned int input, unsigned int compare);
 
 template<typename T>
-T min(T* elements, unsigned int size);
-
-void shellExecute();
+T find_minimum(T *elements, unsigned int size);

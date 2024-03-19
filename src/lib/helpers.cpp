@@ -43,7 +43,7 @@ std::string maskMatchStr(unsigned int input, unsigned int compare) {
 }
 
 template<typename T>
-T min(T *elements, unsigned int size) {
+T find_minimum(T *elements, unsigned int size) {
     if (size == 0) {
         throw InvalidParametersException("Element array must be greater than 0.");
     }

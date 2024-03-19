@@ -1,5 +1,5 @@
 #pragma once
-#include <windows.h>
+#include <Windows.h>
 
 // Check windows
 #if _WIN32 || _WIN64
