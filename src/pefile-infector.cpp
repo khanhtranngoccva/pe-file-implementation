@@ -5,7 +5,7 @@
 
 int main(const int argc, const char **argv) {
     if (argc != 3) {
-        std::cerr << "Usage: pefile-injector.exe [target-path] [payload-path]" << std::endl;
+        std::cerr << "Usage: pefile-infector.exe [target-path] [source-path]" << std::endl;
         exit(1);
     }
 

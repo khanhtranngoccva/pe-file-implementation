@@ -1,7 +1,7 @@
 #pragma once
 
-#include <exception>
 #include <string>
+#include <exception>
 
 class Exception : public std::exception {
     char *message;
@@ -33,5 +33,11 @@ public:
 class InvalidDosHeaderException : public Exception {
 public:
     explicit InvalidDosHeaderException(const char *message) : Exception(message) {
+    }
+};
+
+class InvalidParametersException : public Exception {
+public:
+    explicit InvalidParametersException(const char *message) : Exception(message) {
     }
 };
