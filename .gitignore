@@ -1,4 +1,6 @@
 cmake-build-*
-workspace
+workspace/*
 .idea
 .vscode
+node_modules
+payload/dist

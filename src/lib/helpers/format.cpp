@@ -16,6 +16,10 @@ std::string formatTime(const time_t timestamp) {
 
 template std::string hexify(int);
 
+template std::string hexify(long int);
+
+template std::string hexify(long long);
+
 template std::string hexify(unsigned long int);
 
 template std::string hexify(unsigned int);
@@ -41,31 +45,3 @@ std::string boolStr(bool input) {
 std::string maskMatchStr(unsigned int input, unsigned int compare) {
     return boolStr(maskMatch(input, compare));
 }
-
-template<typename T>
-T find_minimum(T *elements, unsigned int size) {
-    if (size == 0) {
-        throw InvalidParametersException("Element array must be greater than 0.");
-    }
-    T curMin = elements[0];
-    for (unsigned int i = 0; i < size; i++) {
-        if (elements[i] < curMin) {
-            curMin = elements[i];
-        }
-    }
-    return curMin;
-};
-
-template<typename T>
-T max(T *elements, unsigned int size) {
-    if (size == 0) {
-        throw InvalidParametersException("Element array must be greater than 0.");
-    }
-    T curMax = elements[0];
-    for (unsigned int i = 0; i < size; i++) {
-        if (elements[i] > curMax) {
-            curMax = elements[i];
-        }
-    }
-    return curMax;
-};

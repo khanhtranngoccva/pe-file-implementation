@@ -1,5 +1,6 @@
 #pragma once
 #include <ctime>
+#include <string>
 
 std::string formatTime(time_t timestamp);
 
@@ -11,4 +12,13 @@ std::string boolStr(bool input);
 std::string maskMatchStr(unsigned int input, unsigned int compare);
 
 template<typename T>
-T find_minimum(T *elements, unsigned int size);
+T findMinimum(T *elements, unsigned int size);
+
+template<typename T>
+T findMaximum(T *elements, unsigned int size);
+
+template<typename T>
+T minimumDivisible(T number, unsigned int divisor);
+
+template<typename T>
+T findAbsolute(T number);

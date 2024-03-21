@@ -16,14 +16,20 @@ int main(const int argc, const char **argv) {
     PE* pefile;
     try {
         pefile = new PE(targetName);
-        DWORD oldEntryPoint;
+        unsigned long long oldEntryPoint;
+        unsigned long long imageBase;
         if (pefile->getFormat() == IMAGE_FORMAT_PE32) {
-            oldEntryPoint = pefile->getCommitableNtHeaders32()->OptionalHeader.AddressOfEntryPoint;
+            auto header = pefile->getCommitableNtHeaders32();
+            oldEntryPoint = header->OptionalHeader.AddressOfEntryPoint;
+            imageBase = header->OptionalHeader.ImageBase;
         } else {
-            oldEntryPoint = pefile->getCommitableNtHeaders64()->OptionalHeader.AddressOfEntryPoint;
+            auto header = pefile->getCommitableNtHeaders64();
+            oldEntryPoint = header->OptionalHeader.AddressOfEntryPoint;
+            imageBase = header->OptionalHeader.ImageBase;
         }
-        std::cout << "Old entry point: " << hexify(oldEntryPoint) << std::endl;
-        std::string line = "#define ORIGINAl_FILE_OEP " + hexify(oldEntryPoint) + std::string("\n");
+        std::cout << "Old entry point [HEX]: " << hexify(oldEntryPoint) << std::endl;
+        std::cout << "Old entry point: " << oldEntryPoint << std::endl;
+        std::string line = "#define RESUME_POINT " + hexify(oldEntryPoint + imageBase) + std::string("\n");
 
         auto fileHandle = CreateFileA("oep-stager-header.h", GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
         if (!fileHandle) {

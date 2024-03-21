@@ -11,6 +11,22 @@ unsigned int PE::getSectionCount() const {
     }
 }
 
+PIMAGE_SECTION_HEADER PE::getCommitableSectionByName(std::string& name) const {
+    auto sectionCount = this->getSectionCount();
+    auto sections = this->getCommitableSectionHeaders();
+    for (unsigned int i = 0; i < sectionCount; i++) {
+        auto section = &sections[i];
+        char nameBuf[IMAGE_SIZEOF_SHORT_NAME + 1]{};
+        memcpy(nameBuf, section->Name, IMAGE_SIZEOF_SHORT_NAME);
+        nameBuf[IMAGE_SIZEOF_SHORT_NAME] = 0;
+        if (!strcmp(nameBuf, name.c_str())) {
+            return section;
+        }
+    }
+
+    throw Exception("No section found with name " + name);
+}
+
 unsigned short int PE::getFormat() const {
     const auto header = this->getDummyNtHeaders();
     switch (header->OptionalHeader.Magic) {

@@ -41,3 +41,9 @@ public:
     explicit InvalidParametersException(const char *message) : Exception(message) {
     }
 };
+
+class FileManipulationException : public Exception {
+public:
+    explicit FileManipulationException(const char *message) : Exception(message) {
+    }
+};
