@@ -21,26 +21,30 @@ int main(const int argc, const char **argv) {
         if (pefile->getFormat() == IMAGE_FORMAT_PE32) {
             auto header = pefile->getCommitableNtHeaders32();
             oldEntryPoint = header->OptionalHeader.AddressOfEntryPoint;
-            imageBase = header->OptionalHeader.ImageBase;
         } else {
             auto header = pefile->getCommitableNtHeaders64();
             oldEntryPoint = header->OptionalHeader.AddressOfEntryPoint;
-            imageBase = header->OptionalHeader.ImageBase;
         }
-        std::cout << "Old entry point [HEX]: " << hexify(oldEntryPoint) << std::endl;
-        std::cout << "Old entry point: " << oldEntryPoint << std::endl;
-        std::string line = "#define RESUME_POINT " + hexify(oldEntryPoint + imageBase) + std::string("\n");
 
-        auto fileHandle = CreateFileA("oep-stager-header.h", GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+        std::string dummyName("dummy");
+        auto demoNewSectionHeader = pefile->pushNewSection(dummyName, 0, 0);
+        // Takes advantage of deterministic section creation to predict the entry point of shellcode and make a relative jump.
+        unsigned long long newEntryPoint = demoNewSectionHeader->VirtualAddress;
+        std::cout << "Old entry point: " << oldEntryPoint << std::endl;
+        std::cout << "New entry point: " << newEntryPoint << std::endl;
+
+        auto line = std::to_string(newEntryPoint - oldEntryPoint);
+
+        auto fileHandle = CreateFileA("reljump.txt", GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
         if (!fileHandle) {
             CloseHandle(fileHandle);
-            throw Exception("Failed to open oep-stager-header.h");
+            throw Exception("Failed to open reljump.txt");
         }
 
         auto result = WriteFile(fileHandle, line.c_str(), line.length(), nullptr, nullptr);
         if (!result) {
             CloseHandle(fileHandle);
-            throw Exception("Failed to write to oep-stager-header.h");
+            throw Exception("Failed to write to reljump.txt");
         }
 
         pefile->destroy();

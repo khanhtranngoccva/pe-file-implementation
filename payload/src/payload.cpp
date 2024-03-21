@@ -1,5 +1,4 @@
 #include "peb-lookup.h"
-#include "../dist/oep-stager-header.h"
 
 // It's worth noting that strings can be defined inside the .text section:
 #pragma code_seg(".text")

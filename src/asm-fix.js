@@ -79,8 +79,20 @@ function parseSimpleSegment(lines) {
     return res;
 }
 
+async function getRelJumpLength(filename) {
+    const string = (await fs.readFile(filename)).toString();
+    return Number(string);
+}
 
-async function patch(filename, output) {
+async function getRelJumpCode(filename) {
+    return `lea rax, AlignRSP
+    sub rax, ${await getRelJumpLength(filename)}
+    push rax
+    xor rax, rax
+    ret\t0`;
+}
+
+async function patch(filename, output, reljump) {
     const data = (await fs.readFile(filename)).toString().split(/\r\n/);
     const stage1 = data.filter(l => !/^INCLUDELIB .*$/.test(l));
     const stage2 = stage1.join("\r\n").replace("mov\trax, QWORD PTR gs:96", "mov\trax, QWORD PTR gs:[96]").split("\r\n");
@@ -94,8 +106,17 @@ async function patch(filename, output) {
         throw new Error("First text segment not found.");
     }
     firstTextSeg.data = ALIGN_RSP + "\r\n" + firstTextSeg.data;
+
+    const firstTextSegLines = firstTextSeg.data.split("\r\n");
+    const endp = firstTextSegLines.findIndex(l => l === "main\tENDP");
+    if (endp === -1) {
+        throw new Error("Endproc not found!");
+    }
+    firstTextSegLines[endp - 1] = await getRelJumpCode(reljump);
+    firstTextSeg.data = firstTextSegLines.join("\r\n");
+
     const final = stage3.join("\r\n");
     await fs.writeFile(output, final);
 }
 
-patch(process.argv[2], process.argv[3])
+patch(process.argv[2], process.argv[3], process.argv[4])
