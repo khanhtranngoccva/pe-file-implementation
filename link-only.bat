@@ -9,6 +9,6 @@ set cwd=%cd%
 cd %location%/payload/dist
 ml64.exe output.asm /link /entry:AlignRSP
 %location%/cmake-build-debug/pefile-infector.exe %target% output.exe molware.exe
-molware.exe
+molware.exe a b c d e f
 echo Process exited with error %ERRORLEVEL%
 cd %cwd%

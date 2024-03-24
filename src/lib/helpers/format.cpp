@@ -11,7 +11,10 @@ std::string formatTime(const time_t timestamp) {
     tm curTime{};
     gmtime_s(&curTime, &timestamp);
     strftime(output, MAX_TIME_DISPLAY_LENGTH, "%Y/%m/%d %H:%M:%S UTC", &curTime);
-    return output;
+    std::stringstream stream;
+    stream << output;
+    std::string stringOutput = stream.str();
+    return stringOutput;
 }
 
 template std::string hexify(int);

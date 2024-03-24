@@ -85,8 +85,9 @@ async function getRelJumpLength(filename) {
 }
 
 async function getRelJumpCode(filename) {
-    return `lea rax, AlignRSP
-    sub rax, ${await getRelJumpLength(filename)}
+    return `
+    lea rax, AlignRSP
+    sub rax, ${filename ? await getRelJumpLength(filename) : 0xDEADBEEF}
     push rax
     xor rax, rax
     ret\t0`;
