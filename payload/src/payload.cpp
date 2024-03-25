@@ -4,11 +4,7 @@
 #pragma code_seg(".text")
 
 int main() {
-    char create_thread_name[] = {'C', 'r', 'e', 'a', 't', 'e', 'T', 'h', 'r', 'e', 'a', 'd', 0};
-    char get_exit_code_thread_name[] = {'G', 'e', 't', 'E', 'x', 'i', 't', 'C', 'o', 'e', 'T', 'h', 'r', 'e', 'a', 'd', 0};
-    char wait_for_single_object_name[] = {'W', 'a', 'i', 't', 'F', 'o', 'r', 'S', 'i', 'n', 'g', 'l', 'e', 'O', 'b', 'j', 'e', 'c', 't', 0};
     char message_box_name[] = {'M', 'e', 's', 's', 'a', 'g', 'e', 'B', 'o', 'x', 'W', 0};
-    char kernel32_dll_name_a[] = {'k', 'e', 'r', 'n', 'e', 'l', '3', '2', '.', 'd', 'l', 'l', 0};
     wchar_t kernel32_dll_name[] = {'k', 'e', 'r', 'n', 'e', 'l', '3', '2', '.', 'd', 'l', 'l', 0};
     char load_lib_name[] = {'L', 'o', 'a', 'd', 'L', 'i', 'b', 'r', 'a', 'r', 'y', 'A', 0};
     char get_proc_name[] = {'G', 'e', 't', 'P', 'r', 'o', 'c', 'A', 'd', 'd', 'r', 'e', 's', 's', 0};
@@ -45,13 +41,13 @@ int main() {
 //        return 5;
 //    }
 
-//     resolve createthread() address
+//     resolve createthread() modifier
 //    auto create_thread = $GetProcAddress(kernel32_dll, create_thread_name);
 //    if (!create_thread) {
 //        return 6;
 //    }
 //
-//     resolve waitforsingleobject() address
+//     resolve waitforsingleobject() modifier
 //    auto wait_for_single_object = $GetProcAddress(kernel32_dll, wait_for_single_object_name);
 //    if (!wait_for_single_object) {
 //        return 7;

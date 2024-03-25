@@ -19,12 +19,12 @@ PIMAGE_SECTION_HEADER PE::findHeaderOfContainingSection(unsigned long long virtu
 char *PE::getPointerFromRva(unsigned long long virtualAddress) const {
     auto containingSection = this->findHeaderOfContainingSection(virtualAddress);
     if (!containingSection) {
-        throw InvalidVirtualAddressException("Cannot find a section that accommodates this virtual address.");
+        throw InvalidVirtualAddressException("Cannot find a section that accommodates this virtual modifier.");
     }
     auto resultPointer = this->fileBuffer + containingSection->PointerToRawData - containingSection->VirtualAddress +
                          virtualAddress;
     if (resultPointer < this->fileBuffer || resultPointer >= this->fileBuffer + this->fileSize) {
-        throw InvalidVirtualAddressException("RVA address is invalid.");
+        throw InvalidVirtualAddressException("RVA modifier is invalid.");
     }
     return static_cast<char *>(resultPointer);
 }

@@ -64,7 +64,7 @@ public:
 
     PIMAGE_DATA_DIRECTORY getCommitableDataDirectory(unsigned short int type) const;
 
-    PIMAGE_SECTION_HEADER PE::getCommitableSectionByName(std::string& name) const;
+    PIMAGE_SECTION_HEADER getCommitableSectionByName(std::string& name) const;
 
     char* getCommitableSectionData(PIMAGE_SECTION_HEADER section) const;
 

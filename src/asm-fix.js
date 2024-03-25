@@ -95,14 +95,6 @@ function getAlignRSP(architecture) {
     ret ; Return to caller
 AlignRSP ENDP`;
     const ALIGN_RSP_86 = `AlignRSP PROC
-    push esi ; Preserve RSI since we're stomping on it
-    mov esi, esp ; Save the value of RSP so it can be restored
-    and esp, 0FFFFFF0h ; Align RSP to 16 bytes
-    sub esp, 020h ; Allocate homing space for ExecutePayload
-    call _main ; Call the entry point of the payload
-    mov esp, esi ; Restore the original value of RSP
-    pop esi ; Restore RSI
-    ret ; Return to caller
 AlignRSP ENDP`;
     return architecture === "x86" ? ALIGN_RSP_86 : ALIGN_RSP_64;
 }
@@ -112,21 +104,22 @@ async function getRelJumpLength(filename) {
     return Number(string);
 }
 
-async function getRelJumpCode(architecture, filename) {
+async function getJumpCode(architecture, filename) {
     if (architecture === "x86") {
         return `
-    lea eax, AlignRSP
-    sub eax, ${filename ? await getRelJumpLength(filename) : 0xDEADBEEF}
+    mov eax, ${0xDEADBEEF}
     push eax
     xor eax, eax
     ret\t0`;
     } else {
+    // using PEB access instead.
         return `
-    lea rax, AlignRSP
-    sub rax, ${filename ? await getRelJumpLength(filename) : 0xDEADBEEF}
+    mov	rax, QWORD PTR gs:[96]
+    mov rax, [rax+16]
+    add rax, ${0xDEADBEEF}
     push rax
     xor rax, rax
-    ret\t0`;
+    ret	0`;
     }
 }
 
@@ -157,7 +150,7 @@ async function patch(filename, output, architecture, relJumpFilename) {
     if (endp === -1) {
         throw new Error("Endproc not found!");
     }
-    firstTextSegLines[endp - 1] = await getRelJumpCode(architecture, relJumpFilename);
+    firstTextSegLines[endp - 1] = await getJumpCode(architecture, relJumpFilename);
     firstTextSeg.data = firstTextSegLines.join("\r\n");
 
     const final = stage3.join("\r\n");

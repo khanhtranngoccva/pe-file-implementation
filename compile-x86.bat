@@ -3,7 +3,6 @@ echo Location: %~dp0
 echo Target: %~f1
 
 set location=%~dp0
-set outputLocation=%~f2
 set cwd=%cd%
 
 call vcvarsall.bat x86

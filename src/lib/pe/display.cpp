@@ -88,9 +88,9 @@ void PE::displaySections() const {
         name[IMAGE_SIZEOF_SHORT_NAME] = 0;
         std::cout << i << ": " << name << std::endl;
         std::cout << "Virtual size: " << currentSectionHeader->Misc.VirtualSize << " bytes" << std::endl;
-        std::cout << "Virtual address: " << hexify(currentSectionHeader->VirtualAddress) << std::endl;
+        std::cout << "Virtual modifier: " << hexify(currentSectionHeader->VirtualAddress) << std::endl;
         std::cout << "Raw data size: " << currentSectionHeader->SizeOfRawData << " bytes" << std::endl;
-        std::cout << "Raw data address: " << hexify(currentSectionHeader->PointerToRawData) << std::endl;
+        std::cout << "Raw data modifier: " << hexify(currentSectionHeader->PointerToRawData) << std::endl;
         std::cout << "Characteristics: " << hexify(currentSectionHeader->Characteristics) << std::endl;
         PE::displaySectionCharacteristics(currentSectionHeader->Characteristics);
     }
@@ -100,7 +100,7 @@ void PE::displayImports() const {
     std::cout << "IMPORTS" << std::endl;
     PIMAGE_DATA_DIRECTORY dataDir = this->getCommitableDataDirectory(IMAGE_DIRECTORY_ENTRY_IMPORT);
 
-    // subtract virtual address because the pointer to raw data is relative to the image base, not the start of the section.
+    // subtract virtual modifier because the pointer to raw data is relative to the image base, not the start of the section.
     auto importDescriptors = reinterpret_cast<PIMAGE_IMPORT_DESCRIPTOR>(this->getPointerFromRva(dataDir->VirtualAddress));
     char zeroBufImportDesc[sizeof(IMAGE_IMPORT_DESCRIPTOR)] = {};
 
@@ -162,7 +162,7 @@ void PE::displayExports() const {
     try {
         rawExportPointer = this->getPointerFromRva(dataDir->VirtualAddress);
     } catch (InvalidVirtualAddressException &) {
-        std::cerr << "Invalid export virtual address. PE file may have been packed or obfuscated.";
+        std::cerr << "Invalid export virtual modifier. PE file may have been packed or obfuscated.";
         return;
     }
     std::cout << "EXPORTS" << std::endl;
