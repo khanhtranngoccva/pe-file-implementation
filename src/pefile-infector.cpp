@@ -3,10 +3,11 @@
 #include "pe.h"
 #include "helpers.h"
 #include "exception.h"
+#include <argparse/argparse.hpp>
 
 int main(const int argc, const char **argv) {
-    if (argc != 4) {
-        std::cerr << "Usage: pefile-infector.exe [target-path] [payload-path] [output-path]" << std::endl;
+    if (argc != 5) {
+        std::cerr << "Usage: pefile-infector.exe [target-path] [payload86-path] [payload64-path] [output-path]" << std::endl;
         exit(1);
     }
 
@@ -14,7 +15,7 @@ int main(const int argc, const char **argv) {
     std::cout << "INFECTING: " << targetName << std::endl;
 
     const char *payloadName = argv[2];
-    std::cout << "PAYLOAD: " << payloadName << std::endl;
+    std::cout << "x86 PAYLOAD: " << payloadName << std::endl;
 
     const char *outputPath = argv[3];
     std::cout << "OUTPUT: " << outputPath << std::endl;

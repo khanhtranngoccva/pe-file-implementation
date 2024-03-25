@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@types/node": "^20.11.29"
+    "@types/argparse": "^2.0.16",
+    "@types/node": "^20.11.29",
+    "argparse": "^2.0.1"
   }
 }
