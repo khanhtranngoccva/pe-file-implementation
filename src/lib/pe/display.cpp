@@ -161,7 +161,8 @@ void PE::displayExports() const {
     char* rawExportPointer;
     try {
         rawExportPointer = this->getPointerFromRva(dataDir->VirtualAddress);
-    } catch (InvalidVirtualAddressException &) {
+    } catch (InvalidVirtualAddressException & e) {
+        e.destroy();
         std::cerr << "Invalid export virtual modifier. PE file may have been packed or obfuscated.";
         return;
     }

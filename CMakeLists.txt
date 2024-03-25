@@ -20,6 +20,11 @@ add_executable (pefile-infector ${SHARED_LIBRARIES} src/pefile-infector.cpp)
 target_link_libraries(pefile-infector argparse)
 target_include_directories(pefile-infector PRIVATE include)
 
+add_executable (pefile-infector-asm ${SHARED_LIBRARIES} src/pefile-infector.cpp)
+set_target_properties(pefile-infector-asm PROPERTIES COMPILE_FLAGS "/Fa")
+target_link_libraries(pefile-infector-asm argparse)
+target_include_directories(pefile-infector-asm PRIVATE include)
+
 add_executable (pefile-oep-stager ${SHARED_LIBRARIES} src/pefile-oep-stager.cpp)
 target_link_libraries(pefile-oep-stager argparse)
 target_include_directories(pefile-oep-stager PRIVATE include)
