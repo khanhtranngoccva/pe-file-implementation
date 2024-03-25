@@ -4,3 +4,4 @@ workspace/*
 .vscode
 node_modules
 payload/dist
+output/*

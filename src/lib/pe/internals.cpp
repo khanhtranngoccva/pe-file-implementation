@@ -38,6 +38,11 @@ void PE::destroy() {
     }
 }
 
+void PE::destroyAndFree() {
+    this->destroy();
+    free(this);
+}
+
 void PE::destroyMappings() {
     CloseHandle(this->fileHandle);
     CloseHandle(this->mappingHandle);

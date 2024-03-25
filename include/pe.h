@@ -42,6 +42,8 @@ public:
 
     void destroy();
 
+    void destroyAndFree();
+
     std::string getFormattedNtMachine() const;
 
     std::string getFormattedNtSubsystem() const;

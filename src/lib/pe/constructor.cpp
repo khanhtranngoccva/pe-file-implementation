@@ -7,7 +7,7 @@ PE::PE(const char *filename) {
         this->fileHandle = CreateFileA(filename, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
                                        FILE_ATTRIBUTE_NORMAL, nullptr);
         if (this->fileHandle == INVALID_HANDLE_VALUE) {
-            throw Exception("Failed to open file" + std::string(filename));
+            throw Exception("Failed to open file " + std::string(filename));
         }
 
         LARGE_INTEGER fileSize;

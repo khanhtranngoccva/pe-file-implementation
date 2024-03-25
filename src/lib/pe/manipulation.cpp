@@ -104,12 +104,12 @@ void PE::save(const char *filename) const {
     auto handle = CreateFileA(filename, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
                               FILE_ATTRIBUTE_NORMAL, nullptr);
     if (handle == INVALID_HANDLE_VALUE) {
-        throw Exception("Failed to open file" + std::string(filename));
+        throw Exception("Failed to open file " + std::string(filename));
     }
     auto writeResult = WriteFile(handle, this->fileBuffer, this->fileSize, nullptr, nullptr);
     CloseHandle(handle);
     if (!writeResult) {
-        throw Exception("Failed to save to file" + std::string(filename));
+        throw Exception("Failed to save to file " + std::string(filename));
     }
 }
 

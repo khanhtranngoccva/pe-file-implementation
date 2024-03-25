@@ -22,3 +22,7 @@ T minimumDivisible(T number, unsigned int divisor);
 
 template<typename T>
 T findAbsolute(T number);
+
+bool isFile(std::string& path);
+
+bool isDirectory(std::string& path);
